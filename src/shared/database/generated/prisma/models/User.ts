@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  balance: runtime.Decimal | null
+}
+
+export type UserSumAggregateOutputType = {
+  balance: runtime.Decimal | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type UserMinAggregateOutputType = {
   cpf: string | null
   email: string | null
   password: string | null
+  balance: runtime.Decimal | null
   createdAt: Date | null
 }
 
@@ -41,6 +52,7 @@ export type UserMaxAggregateOutputType = {
   cpf: string | null
   email: string | null
   password: string | null
+  balance: runtime.Decimal | null
   createdAt: Date | null
 }
 
@@ -51,10 +63,19 @@ export type UserCountAggregateOutputType = {
   cpf: number
   email: number
   password: number
+  balance: number
   createdAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  balance?: true
+}
+
+export type UserSumAggregateInputType = {
+  balance?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -63,6 +84,7 @@ export type UserMinAggregateInputType = {
   cpf?: true
   email?: true
   password?: true
+  balance?: true
   createdAt?: true
 }
 
@@ -73,6 +95,7 @@ export type UserMaxAggregateInputType = {
   cpf?: true
   email?: true
   password?: true
+  balance?: true
   createdAt?: true
 }
 
@@ -83,6 +106,7 @@ export type UserCountAggregateInputType = {
   cpf?: true
   email?: true
   password?: true
+  balance?: true
   createdAt?: true
   _all?: true
 }
@@ -125,6 +149,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -155,6 +191,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -166,8 +204,11 @@ export type UserGroupByOutputType = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal
   createdAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -197,6 +238,7 @@ export type UserWhereInput = {
   cpf?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  balance?: Prisma.DecimalFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   senderTransactions?: Prisma.TransactionListRelationFilter
   receiverTransactions?: Prisma.TransactionListRelationFilter
@@ -209,6 +251,7 @@ export type UserOrderByWithRelationInput = {
   cpf?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   senderTransactions?: Prisma.TransactionOrderByRelationAggregateInput
   receiverTransactions?: Prisma.TransactionOrderByRelationAggregateInput
@@ -225,6 +268,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   first_name?: Prisma.StringFilter<"User"> | string
   last_name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  balance?: Prisma.DecimalFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   senderTransactions?: Prisma.TransactionListRelationFilter
   receiverTransactions?: Prisma.TransactionListRelationFilter
@@ -237,10 +281,13 @@ export type UserOrderByWithAggregationInput = {
   cpf?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -253,6 +300,7 @@ export type UserScalarWhereWithAggregatesInput = {
   cpf?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  balance?: Prisma.DecimalWithAggregatesFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -263,6 +311,7 @@ export type UserCreateInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   senderTransactions?: Prisma.TransactionCreateNestedManyWithoutSenderInput
   receiverTransactions?: Prisma.TransactionCreateNestedManyWithoutReceiverInput
@@ -275,6 +324,7 @@ export type UserUncheckedCreateInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   senderTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutSenderInput
   receiverTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReceiverInput
@@ -287,6 +337,7 @@ export type UserUpdateInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   senderTransactions?: Prisma.TransactionUpdateManyWithoutSenderNestedInput
   receiverTransactions?: Prisma.TransactionUpdateManyWithoutReceiverNestedInput
@@ -299,6 +350,7 @@ export type UserUncheckedUpdateInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   senderTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutSenderNestedInput
   receiverTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReceiverNestedInput
@@ -311,6 +363,7 @@ export type UserCreateManyInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
 }
 
@@ -321,6 +374,7 @@ export type UserUpdateManyMutationInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -331,6 +385,7 @@ export type UserUncheckedUpdateManyInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -347,7 +402,12 @@ export type UserCountOrderByAggregateInput = {
   cpf?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  balance?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -357,6 +417,7 @@ export type UserMaxOrderByAggregateInput = {
   cpf?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -367,7 +428,12 @@ export type UserMinOrderByAggregateInput = {
   cpf?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  balance?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -377,6 +443,14 @@ export type UserScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -418,6 +492,7 @@ export type UserCreateWithoutSenderTransactionsInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   receiverTransactions?: Prisma.TransactionCreateNestedManyWithoutReceiverInput
 }
@@ -429,6 +504,7 @@ export type UserUncheckedCreateWithoutSenderTransactionsInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   receiverTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
@@ -445,6 +521,7 @@ export type UserCreateWithoutReceiverTransactionsInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   senderTransactions?: Prisma.TransactionCreateNestedManyWithoutSenderInput
 }
@@ -456,6 +533,7 @@ export type UserUncheckedCreateWithoutReceiverTransactionsInput = {
   cpf: string
   email: string
   password: string
+  balance: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   senderTransactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutSenderInput
 }
@@ -483,6 +561,7 @@ export type UserUpdateWithoutSenderTransactionsInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receiverTransactions?: Prisma.TransactionUpdateManyWithoutReceiverNestedInput
 }
@@ -494,6 +573,7 @@ export type UserUncheckedUpdateWithoutSenderTransactionsInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receiverTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
@@ -516,6 +596,7 @@ export type UserUpdateWithoutReceiverTransactionsInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   senderTransactions?: Prisma.TransactionUpdateManyWithoutSenderNestedInput
 }
@@ -527,6 +608,7 @@ export type UserUncheckedUpdateWithoutReceiverTransactionsInput = {
   cpf?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   senderTransactions?: Prisma.TransactionUncheckedUpdateManyWithoutSenderNestedInput
 }
@@ -578,6 +660,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cpf?: boolean
   email?: boolean
   password?: boolean
+  balance?: boolean
   createdAt?: boolean
   senderTransactions?: boolean | Prisma.User$senderTransactionsArgs<ExtArgs>
   receiverTransactions?: boolean | Prisma.User$receiverTransactionsArgs<ExtArgs>
@@ -593,10 +676,11 @@ export type UserSelectScalar = {
   cpf?: boolean
   email?: boolean
   password?: boolean
+  balance?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "cpf" | "email" | "password" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "cpf" | "email" | "password" | "balance" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   senderTransactions?: boolean | Prisma.User$senderTransactionsArgs<ExtArgs>
   receiverTransactions?: boolean | Prisma.User$receiverTransactionsArgs<ExtArgs>
@@ -616,6 +700,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cpf: string
     email: string
     password: string
+    balance: runtime.Decimal
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -994,6 +1079,7 @@ export interface UserFieldRefs {
   readonly cpf: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly balance: Prisma.FieldRef<"User", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

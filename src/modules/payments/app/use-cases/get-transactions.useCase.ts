@@ -6,15 +6,12 @@ type TransactionInput = void;
 
 type TransactionOutput = {
   id: string;
-  sender: string;
-  receiver: string;
+  senderId: string;
+  receiverId: string;
   value: number;
 }[];
 
-export class GetAllTransactionsUseCase implements UseCase<
-  TransactionInput,
-  TransactionOutput
-> {
+export class GetAllTransactionsUseCase implements UseCase<TransactionInput, TransactionOutput> {
   constructor(private readonly transactionGateway: ITransactionGateway) { }
 
   public async execute(): Promise<TransactionOutput> {
@@ -26,8 +23,8 @@ export class GetAllTransactionsUseCase implements UseCase<
     const allTransactions = transaction.map((t) => {
       return new Transaction({
         id: t.id,
-        sender: t.sender,
-        receiver: t.receiver,
+        senderId: t.senderId,
+        receiverId: t.receiverId,
         value: t.value,
       });
     });

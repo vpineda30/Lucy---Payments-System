@@ -7,8 +7,8 @@ export class NewTransactionsController {
 
   public async handler(request: Request, response: Response) {
     try {
-      const { senderId, receiverId, value } = request.body;
-      const newTransaction = await this.newTransactionsUseCase.execute({ senderId, receiverId, value });
+      const { senderId, receiverCpf, value } = request.body;
+      const newTransaction = await this.newTransactionsUseCase.execute({ senderId, receiverCpf, value });
       const httpResponse: IHttpResponse<any> = {
         success: true,
         status: 201,

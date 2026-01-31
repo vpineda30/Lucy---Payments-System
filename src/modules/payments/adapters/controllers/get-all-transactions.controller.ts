@@ -3,9 +3,7 @@ import { GetAllTransactionsUseCase } from "../../app/use-cases/get-transactions.
 import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
 
 export class GetAllTransactionsController {
-  constructor(
-    private readonly getAllTransactionsUseCase: GetAllTransactionsUseCase,
-  ) { }
+  constructor(private readonly getAllTransactionsUseCase: GetAllTransactionsUseCase) {}
 
   public async handler(request: Request, response: Response) {
     try {
@@ -14,7 +12,7 @@ export class GetAllTransactionsController {
         success: true,
         status: 200,
         response: transactions,
-      };
+      }
       return response.status(httpResponse.status).json(httpResponse.response);
     } catch (error) {
       const httpResponse: IHttpResponse<string> = {
@@ -22,7 +20,7 @@ export class GetAllTransactionsController {
         status: 400,
         response: "Erro no Servidor. Tente novamente mais tarde.\n " + error
       }
-      return response.status(httpResponse.status).json(httpResponse.response)
+      return response.status(httpResponse.status).json(httpResponse.response);
     }
   }
 }

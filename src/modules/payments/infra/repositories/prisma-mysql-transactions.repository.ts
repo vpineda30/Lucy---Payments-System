@@ -2,7 +2,7 @@ import { prisma } from "../../../../shared/database/prisma/prisma.js";
 import { Transaction } from "../../app/entities/transaction.entity.js";
 import { ITransactionGateway } from "../../app/gateways/transaction.gateway.js";
 
-export class PrismaTransactionRepository implements ITransactionGateway {
+export class PrismaMySqlTransactionRepository implements ITransactionGateway {
   public async getAll(): Promise<Transaction[]> {
     const transaction = await prisma.transaction.findMany();
     return transaction.map((t) => {
@@ -18,7 +18,7 @@ export class PrismaTransactionRepository implements ITransactionGateway {
   public async getTransactionByReceiver(id: string): Promise<Transaction[]> {
     const transaction = await prisma.transaction.findMany({ where: { receiverId: id } })
 
-    if (!transaction) {
+    if (transaction.length === null) {
       throw new Error("Transação não encontrada");
     }
 
@@ -35,9 +35,9 @@ export class PrismaTransactionRepository implements ITransactionGateway {
   public async newTransaction(transaction: Transaction): Promise<Transaction> {
     const newTransaction = await prisma.transaction.create({
       data: {
+        value: transaction.value,
         senderId: transaction.senderId,
         receiverId: transaction.receiverId,
-        value: transaction.value,
       },
     });
 

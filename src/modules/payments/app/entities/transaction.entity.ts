@@ -19,7 +19,7 @@ export class Transaction {
       id: randomUUID(),
       senderId,
       receiverId,
-      value
+      value,
     })
   }
 

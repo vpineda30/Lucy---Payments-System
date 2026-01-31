@@ -1,4 +1,3 @@
-import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
 import { User } from "../entities/user.entity.js";
 
 export interface IUserGateway {

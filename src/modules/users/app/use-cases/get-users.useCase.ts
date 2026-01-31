@@ -30,6 +30,7 @@ export class GetUsersUseCase implements UseCase<getUsersInputDto, getUsersOutput
         email: u.email,
         cpf: u.cpf,
         password: u.password,
+        balance: u.balance
       });
     });
 

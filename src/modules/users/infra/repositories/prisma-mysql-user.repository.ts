@@ -3,7 +3,7 @@ import { User } from "../../app/entities/user.entity.js";
 import { IUserGateway } from "../../app/gateways/user.gateway.js";
 import bcrypt from 'bcrypt'
 
-export class PrismaMySqlUserRepository implements IUserGateway {
+export class PrismaMySqlUserRepository implements IUserGateway  {
     public async getAll(): Promise<User[]> {
         const users = await prisma.user.findMany()
         return users.map((u) => {
@@ -14,6 +14,7 @@ export class PrismaMySqlUserRepository implements IUserGateway {
                 email: u.email,
                 cpf: u.cpf,
                 password: u.password,
+                balance: u.balance.toNumber()
             })
         })
     }
@@ -27,7 +28,8 @@ export class PrismaMySqlUserRepository implements IUserGateway {
                 last_name: data.last_name,
                 email: data.email,
                 cpf: data.cpf,
-                password: passwordHash
+                password: passwordHash,
+                balance: data.balance
             }
         })
 
@@ -38,6 +40,7 @@ export class PrismaMySqlUserRepository implements IUserGateway {
             email: user.email,
             cpf: user.cpf,
             password: user.password,
+            balance: user.balance.toNumber()
         })
     }
 
@@ -66,6 +69,7 @@ export class PrismaMySqlUserRepository implements IUserGateway {
             email: updateUser.email,
             cpf: updateUser.cpf,
             password: updateUser.password,
+            balance: updateUser.balance.toNumber()
         })
     }
 
@@ -87,6 +91,7 @@ export class PrismaMySqlUserRepository implements IUserGateway {
             email: deleteUser.email,
             cpf: deleteUser.cpf,
             password: deleteUser.password,
+            balance: deleteUser.balance.toNumber()
         })
     }
 
@@ -110,6 +115,7 @@ export class PrismaMySqlUserRepository implements IUserGateway {
             email: userLogin.email,
             cpf: userLogin.cpf,
             password: userLogin.password,
+            balance: userLogin.balance.toNumber()
         })
     }
 }

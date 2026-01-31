@@ -7,6 +7,7 @@ export interface IUserProps {
     email: string
     cpf: string
     password: string
+    balance: number
 }
 
 export class User {
@@ -34,31 +35,36 @@ export class User {
             last_name: last_name,
             email: email,
             cpf: cpf,
-            password: password
+            password: password,
+            balance: 0
         })
     }
 
     public get id() {
-        return this.props.id
+        return this.props.id;
     }
 
     public get first_name() {
-        return this.props.first_name
+        return this.props.first_name;
     }
 
     public get last_name() {
-        return this.props.last_name
+        return this.props.last_name;
     }
 
     public get email() {
-        return this.props.email
+        return this.props.email;
     }
 
     public get cpf() {
-        return this.props.cpf
+        return this.props.cpf;
     }
 
     public get password() {
-        return this.props.password
+        return this.props.password;
+    }
+
+    public get balance() {
+        return this.props.balance;
     }
 }

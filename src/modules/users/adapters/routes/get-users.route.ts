@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql.repository.js";
+import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 import { GetUsersUseCase } from "../../app/use-cases/get-users.useCase.js";
 import { GetUsersController } from "../controllers/get-users.controller.js";
 

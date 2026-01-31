@@ -10,7 +10,7 @@ type loginUserInputDto = {
 type loginUserOutputDto = any;
 
 export class LoginUserUseCase implements UseCase<loginUserInputDto, loginUserOutputDto> {
-  constructor(private readonly loginGateway: IUserGateway) { }
+  constructor(private readonly loginGateway: IUserGateway) {}
 
   public async execute({ email, password }: loginUserInputDto): Promise<loginUserOutputDto> {
     const loginUser = await this.loginGateway.login(email, password);
