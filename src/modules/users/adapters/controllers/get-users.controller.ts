@@ -15,7 +15,13 @@ export class GetUsersController {
       };
       return response.status(httpResponse.status).json(httpResponse.response);
     } catch (error) {
-      throw new Error("Erro no Servidor. Tente Novamente.\n" + error);
+      const httpResponse: IHttpResponse<string> = {
+        success: false,
+        status: 400,
+        response: "Erro no Servidor. Tente novamente mais tarde.\n " + error
+      }
+
+      return response.status(httpResponse.status).json(httpResponse.response)
     }
   }
 }

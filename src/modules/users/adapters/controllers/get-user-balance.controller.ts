@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
-import { LoginUserUseCase } from "../../app/use-cases/login-user.useCase.js";
+import { GetUserBalanceUseCase } from "../../app/use-cases/get-user-balance.useCase.js";
 
-export class LoginUserController {
-    constructor(private readonly loginUserUseCase: LoginUserUseCase) { }
+export class GetUserBalanceController {
+    constructor(private readonly getUserBalanceUseCase: GetUserBalanceUseCase) {}
 
-    public async handler(request: Request, response: Response) {
+    public async handler(request: Request<{ id: string }>, response: Response) {
         try {
-            const { email, password } = request.body;
-            const loginUser = await this.loginUserUseCase.execute({ email, password })
-            const httpResponse: IHttpResponse<string> = {
-                success: true,
-                status: 201,
-                response: loginUser
+            const { id } = request.params
+            const userBalance = await this.getUserBalanceUseCase.execute({ id })
+            const httpResponse: IHttpResponse<{ balance: number }> = {
+                success: false,
+                status: 200,
+                response: userBalance
             }
             return response.status(httpResponse.status).json(httpResponse.response)
         } catch (error) {
@@ -21,7 +21,6 @@ export class LoginUserController {
                 status: 400,
                 response: "Erro no Servidor. Tente novamente mais tarde.\n " + error
             }
-
             return response.status(httpResponse.status).json(httpResponse.response)
         }
     }

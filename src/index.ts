@@ -9,6 +9,7 @@ import { createUserRoute } from "./modules/users/adapters/routes/create-user.rou
 import { deleteUserRoute } from "./modules/users/adapters/routes/delete-user.route.js";
 import { updateUserRoute } from "./modules/users/adapters/routes/update-user.route.js";
 import { loginUserRoute } from "./modules/users/adapters/routes/login-user.route.js";
+import { getUserBalanceRoute } from "./modules/users/adapters/routes/get-user-balance.route.js";
 
 config();
 
@@ -17,6 +18,6 @@ const port = process.env.PORT;
 
 app.use(express.json());
 app.use("/payments/", getAllTransactionsRoute, newTransactionsRoute);
-app.use("/users/", getUsersRoute, createUserRoute, deleteUserRoute, updateUserRoute, loginUserRoute);
+app.use("/users/", getUsersRoute, createUserRoute, deleteUserRoute, updateUserRoute, loginUserRoute, getUserBalanceRoute);
 
 app.listen(port, () => console.log(`Server Running on Port ${port}`));

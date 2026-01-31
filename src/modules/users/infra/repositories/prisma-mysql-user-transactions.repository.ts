@@ -13,14 +13,14 @@ export class PrismaMySqlUserTransactionsRepository implements IUserTransactionsG
         return { id: user.id, email: user.email }
     }
 
-    public async getBalance(id: string): Promise<{ balance: number; }> {
+    public async getBalance(id: string): Promise<{ email: string, balance: number; }> {
         const userBalance = await prisma.user.findUnique({
-            where: { id: id }, select: { balance: true }
+            where: { id: id }, select: { balance: true, email: true }
         })
 
         if(!userBalance?.balance) throw new Error("Sem saldo." + userBalance)
 
-        return { balance: userBalance?.balance.toNumber() }
+        return { email: userBalance.email,  balance: userBalance?.balance.toNumber() }
     }
 
     public async updateBalance(id: string, value: number): Promise<{ balance: number; }> {
