@@ -1,5 +1,5 @@
 import { UseCase } from "../../../../shared/utils/dtos/useCase.dto.js";
-import { IUserTransactionsGateway } from "../../../users/app/gateways/user-transactions.gateway.js";
+import { IUserTransactionsGateway } from "../gateways/user-wallet.gateway.js";
 import { Transaction } from "../entities/transaction.entity.js";
 import { ITransactionGateway } from "../gateways/transaction.gateway.js";
 
@@ -15,21 +15,32 @@ export class NewTransactionUseCase implements UseCase<ITransactionInputDto, ITra
   constructor(private readonly transactionGateway: ITransactionGateway, private readonly userTransactionsGateway: IUserTransactionsGateway) { }
 
   public async execute({ senderId, receiverCpf, value }: ITransactionInputDto): Promise<ITransactionOutputDto> {
-    const receiver = await this.userTransactionsGateway.findByCpf(receiverCpf)
-
-    if(!receiver) {
-      throw new Error("Esse CPF não Existe. Tente Novamente.")
-    }
+    const receiver = await this.userTransactionsGateway.findByCpf(receiverCpf);
+    const senderBalance = await this.userTransactionsGateway.getBalance(senderId);
+    
+    if (!receiver) throw new Error("Esse CPF não Existe. Tente Novamente.");
+    if (!senderBalance || senderBalance.balance < value) throw new Error("Sem Saldo.");
+    if (senderId === receiver.id) throw new Error("As transações não podem ser enviadas para si mesmo.")
+      
+    await this.userTransactionsGateway.addBalance(receiver.id, value);
+    await this.userTransactionsGateway.decreaseBalance(senderId, value);
 
     const transaction = Transaction.create(senderId, receiver.id, value);
-    const newtransaction = await this.transactionGateway.newTransaction(transaction);
-    return this.output(newtransaction);
+    const createtransaction = await this.transactionGateway.newTransaction(transaction);
+
+    if (!createtransaction) throw new Error("Transação não concluída. Tente Novamente.");
+
+    return this.output(createtransaction);
   }
 
   private output(transaction: Transaction): ITransactionOutputDto {
     return {
       message: "Transação Concluída.",
-      Transaction: transaction,
+      Transaction: {
+        senderId: transaction.senderId,
+        receiverId: transaction.receiverId,
+        value: transaction.value,
+      }
     };
   }
 }
