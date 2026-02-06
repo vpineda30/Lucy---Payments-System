@@ -1,4 +1,4 @@
-export interface IUserTransactionsGateway {
+export interface IUserContractGateway {
     findByCpf(cpf: string): Promise<{ id: string, email: string } | null>
     getBalance(id: string): Promise<{ email: string, balance: number } | null>
     addBalance(id: string, value: number): Promise<{ balance: number }>

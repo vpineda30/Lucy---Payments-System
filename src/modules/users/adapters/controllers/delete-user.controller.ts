@@ -5,6 +5,11 @@ import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.j
 export class DeleteUserController {
     constructor(private readonly deleteUserUseCase: DeleteUserUseCase) { }
 
+    public static build(): DeleteUserController {
+        const deleteUserUseCase = DeleteUserUseCase.build();
+        return new DeleteUserController(deleteUserUseCase);
+    }
+
     public async handler(request: Request<{ id: string }>, response: Response) {
         try {
             const { id } = request.params

@@ -1,6 +1,7 @@
 import { IUserGateway } from "../gateways/user.gateway.js";
 import { UseCase } from "../../../../shared/utils/dtos/useCase.dto.js";
 import { User } from "../entities/user.entity.js";
+import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 
 type updateUserInputDto = {
     id: string
@@ -18,6 +19,11 @@ type updateUserOutputDto = any
 
 export class UpdateUserUseCase implements UseCase<updateUserInputDto, updateUserOutputDto> {
     constructor(private readonly userGateway: IUserGateway) { }
+
+    public static build(): UpdateUserUseCase {
+        const repository = new PrismaMySqlUserRepository();
+        return new UpdateUserUseCase(repository);
+    }
 
     public async execute({ id, data }: updateUserInputDto): Promise<updateUserOutputDto> {
         const user = User.create(data.first_name, data.last_name, data.email, data.cpf, data.password, data.confirm_password)

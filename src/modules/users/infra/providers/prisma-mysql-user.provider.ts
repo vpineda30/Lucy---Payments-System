@@ -1,7 +1,7 @@
 import { prisma } from "../../../../shared/database/prisma/prisma.js";
-import { IUserTransactionsGateway } from "../../../payments/app/gateways/user-wallet.gateway.js";
+import { IUserContractGateway } from "../../app/gateways/user-contract.gateway.js";
 
-export class PrismaMySqlUserTransactionsProvider implements IUserTransactionsGateway {
+export class PrismaMySqlUserProvider implements IUserContractGateway {
     public async findByCpf(cpf: string): Promise<{ id: string; email: string; } | null> {
         const user = await prisma.user.findUnique({
             where: { cpf: cpf },

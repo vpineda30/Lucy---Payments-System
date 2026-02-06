@@ -5,6 +5,11 @@ import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.j
 export class GetUsersController {
   constructor(private readonly getUsersUseCase: GetUsersUseCase) { }
 
+  public static build(): GetUsersController {
+    const getUsersUseCase = GetUsersUseCase.build();
+    return new GetUsersController(getUsersUseCase);
+  }
+
   public async handler(request: Request, response: Response) {
     try {
       const users = await this.getUsersUseCase.execute();
@@ -18,10 +23,10 @@ export class GetUsersController {
       const httpResponse: IHttpResponse<string> = {
         success: false,
         status: 400,
-        response: "Erro no Servidor. Tente novamente mais tarde.\n " + error
-      }
+        response: "Erro no Servidor. Tente novamente mais tarde.\n " + error,
+      };
 
-      return response.status(httpResponse.status).json(httpResponse.response)
+      return response.status(httpResponse.status).json(httpResponse.response);
     }
   }
 }

@@ -6,6 +6,11 @@ import { User } from "../../app/entities/user.entity.js";
 export class CreateUserController {
     constructor(private readonly createUserUseCase: CreateUserUseCase) { }
 
+    public static build(): CreateUserController {
+        const createUserUseCase = CreateUserUseCase.build();
+        return new CreateUserController(createUserUseCase);
+    }
+
     public async handler(request: Request, response: Response) {
         try {
             const { first_name, last_name, email, cpf, password, confirm_password } = request.body;

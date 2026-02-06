@@ -3,7 +3,12 @@ import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.j
 import { LoginUserUseCase } from "../../app/use-cases/login-user.useCase.js";
 
 export class LoginUserController {
-    constructor(private readonly loginUserUseCase: LoginUserUseCase) { }
+    constructor(private readonly loginUserUseCase: LoginUserUseCase) {}
+
+    public static build(): LoginUserController {
+        const loginUserUseCase = LoginUserUseCase.build();
+        return new LoginUserController(loginUserUseCase);
+    }
 
     public async handler(request: Request, response: Response) {
         try {

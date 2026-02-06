@@ -2,12 +2,12 @@ import { Request, Response, Router } from "express";
 import { PrismaMySqlTransactionRepository } from "../../infra/repositories/prisma-mysql-transactions.repository.js";
 import { NewTransactionUseCase } from "../../app/use-cases/new-transaction.useCase.js";
 import { NewTransactionsController } from "../controllers/new-transaction.controller.js";
-import { PrismaMySqlUserTransactionsProvider } from "../../../users/infra/providers/prisma-mysql-user-wallet.provider.js";
+import { PrismaMySqlUserProvider } from "../../../users/infra/providers/prisma-mysql-user.provider.js";
 
 export const newTransactionsRoute = Router();
 
 const prismaUserRepository = new PrismaMySqlTransactionRepository();
-const prismaUserTransactionsRepository = new PrismaMySqlUserTransactionsProvider()
+const prismaUserTransactionsRepository = new PrismaMySqlUserProvider()
 const TransactionsUseCase = new NewTransactionUseCase(prismaUserRepository, prismaUserTransactionsRepository);
 const transactionsController = new NewTransactionsController(TransactionsUseCase);
 
