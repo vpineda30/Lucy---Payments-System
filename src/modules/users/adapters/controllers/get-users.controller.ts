@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
 import { GetUsersUseCase } from "../../app/use-cases/get-users.useCase.js";
 import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
+import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 
 export class GetUsersController {
   constructor(private readonly getUsersUseCase: GetUsersUseCase) { }
 
   public static build(): GetUsersController {
-    const getUsersUseCase = GetUsersUseCase.build();
-    return new GetUsersController(getUsersUseCase);
+    const repository = new PrismaMySqlUserRepository()
+    const getUserUseCase = new GetUsersUseCase(repository);
+    return new GetUsersController(getUserUseCase);
   }
 
   public async handler(request: Request, response: Response) {
@@ -25,7 +27,6 @@ export class GetUsersController {
         status: 400,
         response: "Erro no Servidor. Tente novamente mais tarde.\n " + error,
       };
-
       return response.status(httpResponse.status).json(httpResponse.response);
     }
   }

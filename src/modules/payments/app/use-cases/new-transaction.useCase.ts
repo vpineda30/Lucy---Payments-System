@@ -12,7 +12,7 @@ export type ITransactionInputDto = {
 export type ITransactionOutputDto = any;
 
 export class NewTransactionUseCase implements UseCase<ITransactionInputDto, ITransactionOutputDto> {
-  constructor(private readonly transactionGateway: ITransactionGateway, private readonly userTransactionsGateway: IUserContractGateway) { }
+  constructor(private readonly transactionGateway: ITransactionGateway, private readonly userTransactionsGateway: IUserContractGateway) {}
 
   public async execute({ senderId, receiverCpf, value }: ITransactionInputDto): Promise<ITransactionOutputDto> {
     const receiver = await this.userTransactionsGateway.findByCpf(receiverCpf);
@@ -20,7 +20,7 @@ export class NewTransactionUseCase implements UseCase<ITransactionInputDto, ITra
 
     if (!receiver) throw new Error("Esse CPF não Existe. Tente Novamente.");
     if (!senderBalance || senderBalance.balance < value) throw new Error("Sem Saldo.");
-    if (senderId === receiver.id) throw new Error("As transações não podem ser enviadas para si mesmo.")
+    if (senderId === receiver.id) throw new Error("As transações não podem ser enviadas para si mesmo.");
 
     await this.userTransactionsGateway.addBalance(receiver.id, value);
     await this.userTransactionsGateway.decreaseBalance(senderId, value);

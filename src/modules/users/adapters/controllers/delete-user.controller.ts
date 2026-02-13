@@ -1,12 +1,14 @@
 import { Request, RequestParamHandler, Response } from "express";
 import { DeleteUserUseCase } from "../../app/use-cases/delete-user.useCase.js";
 import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
+import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 
 export class DeleteUserController {
     constructor(private readonly deleteUserUseCase: DeleteUserUseCase) { }
 
     public static build(): DeleteUserController {
-        const deleteUserUseCase = DeleteUserUseCase.build();
+        const repository = new PrismaMySqlUserRepository()
+        const deleteUserUseCase = new DeleteUserUseCase(repository);
         return new DeleteUserController(deleteUserUseCase);
     }
 

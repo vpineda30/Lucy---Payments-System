@@ -1,12 +1,22 @@
-import "dotenv/config";
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../generated/prisma/client.js';
+import { config } from "dotenv";
+
+config()
+
+function getEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Variável de ambiente ${name} não definida`);
+  }
+  return value;
+}
 
 const adapter = new PrismaMariaDb({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD, 
-  database: process.env.DATABASE_NAME,
+  host: getEnv("DATABASE_HOST"),
+  user: getEnv("DATABASE_USER"),
+  password: getEnv("DATABASE_PASSWORD"), 
+  database: getEnv("DATABASE_NAME"),
   connectionLimit: 5
 });
 

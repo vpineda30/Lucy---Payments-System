@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import { CreateUserUseCase } from "../../app/use-cases/create-user.useCase.js";
 import { IHttpResponse } from "../../../../shared/utils/dtos/http-response.dto.js";
 import { User } from "../../app/entities/user.entity.js";
+import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 
 export class CreateUserController {
     constructor(private readonly createUserUseCase: CreateUserUseCase) { }
 
     public static build(): CreateUserController {
-        const createUserUseCase = CreateUserUseCase.build();
+        const repository = new PrismaMySqlUserRepository()
+        const createUserUseCase = new CreateUserUseCase(repository);
         return new CreateUserController(createUserUseCase);
     }
 

@@ -17,11 +17,6 @@ type getUsersOutputDto = {
 export class GetUsersUseCase implements UseCase<getUsersInputDto, getUsersOutputDto> {
   constructor(private readonly userGateway: IUserGateway) { }
 
-  public static build(): GetUsersUseCase {
-    const repository = new PrismaMySqlUserRepository();
-    return new GetUsersUseCase(repository);
-  }
-
   public async execute(): Promise<getUsersOutputDto> {
     const users = await this.userGateway.getAll();
     return this.output(users);

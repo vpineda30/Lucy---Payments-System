@@ -12,11 +12,6 @@ type deleteUserOutputDto = any
 export class DeleteUserUseCase implements UseCase<deleteUserInputDto, deleteUserOutputDto> {
     constructor(private readonly userGateway: IUserGateway) { }
 
-    public static build(): DeleteUserUseCase {
-        const repository = new PrismaMySqlUserRepository();
-        return new DeleteUserUseCase(repository);
-    }
-
     public async execute({ id }: deleteUserInputDto): Promise<any> {
         const user = await this.userGateway.delete(id)
         return this.output(user)

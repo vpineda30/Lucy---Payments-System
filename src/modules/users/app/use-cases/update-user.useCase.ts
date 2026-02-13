@@ -20,11 +20,6 @@ type updateUserOutputDto = any
 export class UpdateUserUseCase implements UseCase<updateUserInputDto, updateUserOutputDto> {
     constructor(private readonly userGateway: IUserGateway) { }
 
-    public static build(): UpdateUserUseCase {
-        const repository = new PrismaMySqlUserRepository();
-        return new UpdateUserUseCase(repository);
-    }
-
     public async execute({ id, data }: updateUserInputDto): Promise<updateUserOutputDto> {
         const user = User.create(data.first_name, data.last_name, data.email, data.cpf, data.password, data.confirm_password)
         const updateUser = await this.userGateway.update(id, user)
