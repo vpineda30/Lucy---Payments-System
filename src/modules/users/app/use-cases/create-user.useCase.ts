@@ -1,5 +1,4 @@
 import { UseCase } from "../../../../shared/utils/dtos/useCase.dto.js";
-import { PrismaMySqlUserRepository } from "../../infra/repositories/prisma-mysql-user.repository.js";
 import { User } from "../entities/user.entity.js";
 import { IUserGateway } from "../gateways/user.gateway.js";
 

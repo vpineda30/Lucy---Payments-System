@@ -10,7 +10,10 @@ export interface UserPayload extends JwtPayload {
 }
 
 function isUserPayload(payload: JwtPayload): payload is UserPayload {
-    return (typeof payload.id === 'string' && typeof payload.email === 'string' && typeof payload.first_name === 'string');
+    return (typeof payload.id === 'string' && 
+        typeof payload.email === 'string' && 
+        typeof payload.first_name === 'string'
+    );
 }
 
 export function authMiddleware(req: Request,res: Response,next: NextFunction) {
