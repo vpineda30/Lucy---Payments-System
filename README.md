@@ -27,7 +27,7 @@ Um sistema de gestão de pagamentos robusto e estritamente tipado, desenvolvido 
 
 2. **Instale as dependências:** npm install
 
-3. **Inicie o servidor em modo de desenvolvimento:** npm run dev
+3. **Inicie o servidor em modo de desenvolvimento:** npm start
 
 ## 📖 Guia de Endpoints da API
 Abaixo estão detalhadas as rotas implementadas no sistema. As rotas que exigem o envio do token no header da requisição estão sinalizadas como [Autenticado].
